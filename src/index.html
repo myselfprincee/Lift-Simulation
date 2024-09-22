@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lift Simulation</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <dialog id="dialog">
+        <form id="myform" class="form" onsubmit="submitform(event)">
+            <label class="label" for="floors">Number of floors</label>
+            <input class="text" type="number" id="floors" name="floors" min="2" required>
+
+            <label class="label" for="lifts">Number of Lifts</label>
+            <input class="text" type="number" id="lifts" name="lifts" min="1" required>
+
+            <button class="submit-btn btn" type="submit">Submit</button>
+        </form>
+    </dialog>
+
+    <div class="container">
+        <div class="floors-container" id="floors-container">
+            <div class="lift-container" id="lift-container"></div>
+            <!-- <div class="floor">
+                <p class="floor-number"></p>
+                <div class="button-container">
+                    <button class="up-down-btn" id="up">UP 
+                        <img src="https://img.icons8.com/material-rounded/240/long-arrow-up.png" alt="long-arrow-up" alt="">
+                        </button>
+                        <button class="up-down-btn id="down">DOWN
+                        <img style="rotate: 180deg;" src="https://img.icons8.com/material-rounded/240/long-arrow-up.png" alt="long-arrow-up" alt=""></button>
+                        <div class="floor-line"></div>
+                </div>
+                
+                </div> -->
+            <!-- <div class="lift">
+                    <div class="lift-doors">
+                        <div class="left-door doors"></div>
+                        <div class="right-door doors"></div>
+                    </div>
+                </div> -->
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
