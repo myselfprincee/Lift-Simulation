@@ -5,6 +5,8 @@ const liftContainer = document.getElementById('lift-container');
 
 // Storing lift states (idle, moving, busy )
 const liftStates = [];
+const requestQueue = [];
+
 
 window.onload = () => {
     dialog.showModal();
@@ -167,18 +169,29 @@ const handleLiftRequest = (floorNum) => {
         }
         return false;
     }
-
-    const availableLiftExists = liftStates.some(lift => !lift.moving && !lift.busy);
-
-    if (!availableLiftExists) {
-        console.log("No lifts are available, all lifts are busy or moving");
-        return;
-    }
     
     // Getting the closest available lift
     const closestLift = findingTheClosestLift(liftsPositionArr, floorNum);
     console.log(closestLift)
     if (closestLift === -1) return;
+
+    const availableLiftExists = liftStates.some(lift => !lift.moving && !lift.busy);
+
+    if (!availableLiftExists) {
+        console.log("No lifts are available, all lifts are busy or moving");
+        console.log(liftsPositionArr)
+        if (!requestQueue.includes(Number(floorNum))){
+            console.log("Adding floor to the queue")
+            requestQueue.push(Number(floorNum));
+            console.log(requestQueue)
+            return;
+        } else if (liftsPositionArr.includes(Number(floorNum))) {
+            console.log("Lift already at requested floor");
+            liftAlreadyAtFloor(closestLift, floorNum);
+        }
+        return;
+    }
+    
     
     if (liftsPositionArr.includes(Number(floorNum))) {
         console.log("Lift already at requested floor");
@@ -224,5 +237,12 @@ const triggerDoorAnimation = (lift, liftIndex) => {
         lift.children[1].children[0].style.animation = ``;
         lift.children[1].children[1].style.animation = ``;
         liftStates[liftIndex].busy = false;
+
+        // if there are any pending requests in the queue
+        if (requestQueue.length > 0) {
+            const nextFloor = requestQueue.shift();
+            console.log(`Handling queued request for floor ${nextFloor}`);
+            moveLiftToFloor(liftIndex, nextFloor, lift);
+        }
     }, 5000);
 };
