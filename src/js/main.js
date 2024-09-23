@@ -160,6 +160,7 @@ const handleLiftRequest = (floorNum) => {
     }
 
     
+    
     // console.log(liftsPositionArr)
     // console.log(floorNum)
     const liftAlreadyAtFloor = (liftIndex, floorNum) => {
@@ -174,6 +175,13 @@ const handleLiftRequest = (floorNum) => {
     const closestLift = findingTheClosestLift(liftsPositionArr, floorNum);
     console.log(closestLift)
     if (closestLift === -1) return;
+    
+    if (liftsPositionArr.includes(Number(floorNum))) {
+        console.log("Lift already at requested floor");
+        liftAlreadyAtFloor(closestLift, floorNum);
+        return;
+    }
+    
 
     const availableLiftExists = liftStates.some(lift => !lift.moving && !lift.busy);
 
@@ -189,13 +197,6 @@ const handleLiftRequest = (floorNum) => {
             console.log("Lift already at requested floor");
             liftAlreadyAtFloor(closestLift, floorNum);
         }
-        return;
-    }
-    
-    
-    if (liftsPositionArr.includes(Number(floorNum))) {
-        console.log("Lift already at requested floor");
-        liftAlreadyAtFloor(closestLift, floorNum);
         return;
     }
     
