@@ -122,7 +122,6 @@ const createLifts = (lifts) => {
         const defaultFloorLocation = floorContainer.querySelector('#floor-1');
         defaultFloorLocation.append(liftContainer);
 
-        // Set each lift to 'idle' initially
         liftStates.push({ moving: false, busy: false, currentFloor: 1 });
     }
 };
@@ -168,6 +167,7 @@ const handleLiftRequest = (floorNum) => {
         }
         return false;
     }
+
     const availableLiftExists = liftStates.some(lift => !lift.moving && !lift.busy);
 
     if (!availableLiftExists) {
