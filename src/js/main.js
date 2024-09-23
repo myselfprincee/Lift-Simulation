@@ -147,18 +147,20 @@ const handleLiftRequest = (floorNum) => {
         for (let i = 0; i < liftsPositionArr.length; i++) {
             // Only considering lifts that are not moving and not busy
             if (!liftStates[i].moving && !liftStates[i].busy) {
+                console.log(liftStates[i].currentFloor, floorUserClicked)
                 minimumDistance.push(Math.abs(liftsPositionArr[i] - floorUserClicked));
             } else {
                 minimumDistance.push(Infinity); // Ignore moving or busy lifts
             }
         }
         closestLift = minimumDistance.indexOf(Math.min(...minimumDistance));
+        console.log("closest lift is :",closestLift)
         return closestLift;
     }
 
-
-    console.log(liftsPositionArr)
-    console.log(floorNum)
+    
+    // console.log(liftsPositionArr)
+    // console.log(floorNum)
     const liftAlreadyAtFloor = (liftIndex, floorNum) => {
         if (liftStates[liftIndex].currentFloor === floorNum) {
             triggerDoorAnimation(lifts[liftIndex], liftIndex);
@@ -166,10 +168,16 @@ const handleLiftRequest = (floorNum) => {
         }
         return false;
     }
+    const availableLiftExists = liftStates.some(lift => !lift.moving && !lift.busy);
 
+    if (!availableLiftExists) {
+        console.log("No lifts are available, all lifts are busy or moving");
+        return;
+    }
     
     // Getting the closest available lift
     const closestLift = findingTheClosestLift(liftsPositionArr, floorNum);
+    console.log(closestLift)
     if (closestLift === -1) return;
     
     if (liftsPositionArr.includes(Number(floorNum))) {
