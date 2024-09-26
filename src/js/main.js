@@ -2,11 +2,18 @@ const dialog = document.querySelector("#dialog");
 const form = document.getElementById("myform");
 const floorContainer = document.getElementById('floors-container');
 const liftContainer = document.getElementById('lift-container');
+const goBackBtn = document.getElementById('go-back');
 
 // Storing lift states (idle, moving, busy )
 const liftStates = [];
 const requestQueue = [];
 
+const goBack = () => {
+    window.location.reload();
+    goBackBtn.style.display = 'none';
+}
+
+goBackBtn.addEventListener('click', goBack);
 
 window.onload = () => {
     dialog.showModal();
@@ -23,6 +30,7 @@ const submitform = new Promise((resolve) => {
         createLifts(lifts);
 
         if (dialog.open) dialog.close();
+        goBackBtn.style.display = 'flex';
 
         window.scroll({
             top: document.body.scrollHeight,
